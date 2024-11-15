@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    android:gravity="right"
     android:orientation="vertical"
     tools:context=".ui.recipe.RecipeActivity">
 
@@ -28,6 +30,14 @@
         android:textAllCaps="false"
         android:textSize="24sp"
         android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/viewPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/price_placeholder"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -71,4 +81,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>
+
+    <Button
+        android:id="@+id/addToCartButton"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="8dp"
+        android:onClick="onAddToCart"
+        android:text="@string/add_to_cart_text"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:icon="@drawable/baseline_add_shopping_cart_24_white"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:iconSize="30dp" />
 </LinearLayout>

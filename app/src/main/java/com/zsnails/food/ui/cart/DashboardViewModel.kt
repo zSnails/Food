@@ -1,4 +1,4 @@
-package com.zsnails.food.ui.dashboard
+package com.zsnails.food.ui.cart
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

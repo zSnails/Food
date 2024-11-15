@@ -13,8 +13,8 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.zsnails.food.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:name="com.zsnails.food.ui.cart.CartFragment"
+        android:label="@string/title_cart"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment

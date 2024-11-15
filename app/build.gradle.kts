@@ -19,6 +19,8 @@ android {
 
         buildConfigField("String", "SUPABASE_URL", "\"${project.findProperty("SUPABASE_URL").toString()}\"")
         buildConfigField("String", "SUPABASE_KEY", "\"${project.findProperty("SUPABASE_KEY").toString()}\"")
+        // buildConfigField("String", "PAYPAL_CLIENT_ID", "\"${project.findProperty("PAYPAL_CLIENT_ID").toString()}\"")
+        // buildConfigField("String", "PAYPAL_SECRET", "\"${project.findProperty("PAYPAL_SECRET").toString()}\"")
 
         buildFeatures {
             buildConfig = true
@@ -56,6 +58,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    implementation("com.paypal.android:card-payments:1.7.1")
+
 
     implementation(platform("io.github.jan-tennert.supabase:bom:3.0.2"))
     implementation("io.github.jan-tennert.supabase:postgrest-kt")

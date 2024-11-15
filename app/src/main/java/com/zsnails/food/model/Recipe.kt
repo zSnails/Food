@@ -16,5 +16,7 @@ data class Recipe(
     @SerialName("created_at")
     var createdAt: String?,
     @SerialName("id_rest")
-    var restaurantId: String?
+    var restaurantId: String?,
+    @SerialName("precio")
+    var price: Double
 ) : Serializable

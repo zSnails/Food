@@ -9,4 +9,8 @@
     <string name="ingredients_title">Ingredients</string>
     <string name="instructions_title">Instructions</string>
     <string name="profile_title">Profile</string>
+    <string name="price_placeholder">¢[PRICE]</string>
+    <string name="add_to_cart_text">Add to Cart</string>
+    <string name="cart_price_label">Total Price:</string>
+    <string name="total_price_placeholder">¢[PRICE]</string>
 </resources>

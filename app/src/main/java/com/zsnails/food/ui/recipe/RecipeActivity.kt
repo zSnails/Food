@@ -1,16 +1,23 @@
 package com.zsnails.food.ui.recipe
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zsnails.food.BuildConfig
+import com.zsnails.food.CartViewModel
+import com.zsnails.food.ItemInCartException
+import com.zsnails.food.MainActivity
 import com.zsnails.food.R
 import com.zsnails.food.databinding.ActivityRecipeBinding
 import com.zsnails.food.model.Ingredient
@@ -23,6 +30,9 @@ import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.launch
 import kotlinx.serialization.SerialName
 import java.io.Serializable
+import java.util.Locale
+import androidx.fragment.app.activityViewModels
+import com.zsnails.food.CartOperation
 
 class RecipeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecipeBinding
@@ -34,9 +44,16 @@ class RecipeActivity : AppCompatActivity() {
         var ingredient: Ingredient
     ) : Serializable
 
+    private lateinit var recipe: Recipe
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TODO: this does not work without a server of our own,
+        //  so we need to either add in app payment or find something else
+        // val config = CoreConfig(BuildConfig.PAYPAL_CLIENT_ID, environment = Environment.SANDBOX)
+        // val cardClient = CardClient(this@RecipeActivity, config)
+        // var cardRequest = CardRequest()
 
         binding = ActivityRecipeBinding.inflate(layoutInflater)
         enableEdgeToEdge()
@@ -55,12 +72,17 @@ class RecipeActivity : AppCompatActivity() {
         val adapter = StringListAdapter(this)
         binding.instructionBox.adapter = adapter
 
-        val recipe = intent.getSerializableExtra("recipe", Recipe::class.java)
-        binding.viewRecipeTitle.text = recipe!!.name
+        recipe = intent.getSerializableExtra("recipe", Recipe::class.java)!!
+        binding.viewRecipeTitle.text = recipe.name
         binding.viewRecipeDescription.text = recipe.description
         recipe.instructions?.let {
             adapter.setData(it)
         }
+        binding.viewPrice.text = String.format(Locale.US, "¢%.2f", recipe.price)
+
+        val isAdded = intent.getBooleanExtra("added?", false)
+
+        binding.addToCartButton.isEnabled = !isAdded
 
         binding.ingredientList.layoutManager = LinearLayoutManager(this)
         val adapter2 = StringListAdapter(this)
@@ -78,5 +100,12 @@ class RecipeActivity : AppCompatActivity() {
                 adapter2.setData(it)
             }
         }
+    }
+
+    fun onAddToCart(view: View) {
+        val result = Intent()
+        result.putExtra("added", recipe)
+        setResult(CartOperation.ADD.ordinal, result)
+        binding.addToCartButton.isEnabled = false
     }
 }
