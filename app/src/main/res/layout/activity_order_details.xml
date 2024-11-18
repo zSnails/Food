@@ -2,57 +2,47 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.cart.CartFragment">
+    tools:context=".OrderDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
+            android:layout_gravity="fill_horizontal"
+            android:layout_margin="8dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cart_price_label"
+                android:layout_marginEnd="8dp"
+                android:text="@string/order_id_label"
                 android:textSize="34sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/cartTotalPrice"
+                android:id="@+id/orderIdTextBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/total_price_placeholder"
-                android:textAlignment="textEnd"
-                android:textSize="24sp" />
+                android:text="TextView"
+                android:textSize="34sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/cart"
+            android:id="@+id/orderRecipes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/cart_item_component" />
+            android:layout_margin="8dp"
+            tools:listitem="@layout/recipe_list_component" />
 
-        <Button
-            android:id="@+id/toCheckout"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:onClick="onCheckout"
-            android:text="@string/checkout_button_label"
-            android:textSize="24sp"
-            app:icon="@drawable/round_shopping_cart_checkout_24"
-            app:iconGravity="textStart"
-            app:iconSize="30dp" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,11 +10,12 @@ import com.zsnails.food.ClickListener
 import com.zsnails.food.R
 import com.zsnails.food.model.Recipe
 import com.zsnails.food.ui.home.RecipesAdapter.RecipeViewHolder
-import java.util.ArrayList
 
-class RecipesAdapter(private val context: Context, private val listener: ClickListener<Recipe>) : RecyclerView.Adapter<RecipeViewHolder>() {
+class RecipesAdapter(private val context: Context, private val listener: ClickListener<Recipe>) :
+    RecyclerView.Adapter<RecipeViewHolder>() {
 
     private val allRecipes = ArrayList<Recipe>()
+
     inner class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.recipeTitle)
         val description = itemView.findViewById<TextView>(R.id.recipeDescription)
@@ -22,7 +23,8 @@ class RecipesAdapter(private val context: Context, private val listener: ClickLi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val layout = LayoutInflater.from(context).inflate(R.layout.recipe_list_component, parent , false)
+        val layout =
+            LayoutInflater.from(context).inflate(R.layout.recipe_list_component, parent, false)
         val viewHolder = RecipeViewHolder(layout)
         return viewHolder
     }

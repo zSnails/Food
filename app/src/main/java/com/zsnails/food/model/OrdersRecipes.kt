@@ -5,12 +5,12 @@ import java.io.Serializable
 import kotlinx.serialization.Serializable as S
 
 @S
-data class Order(
+data class OrdersRecipes(
     val id: Long? = null,
     @SerialName("created_at")
     val createdAt: String? = null,
-    @SerialName("owner_id")
-    val ownerId: String,
-    @SerialName("price")
-    val price: Double
+    @SerialName("recipe_id")
+    val recipeId: Long? = null,
+    @SerialName("order_id")
+    val orderId: Long? = null,
 ) : Serializable

@@ -11,7 +11,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zsnails.food.BuildConfig
@@ -27,7 +26,6 @@ import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
 
 class HomeFragment : Fragment(), ClickListener<Recipe> {
 
@@ -50,7 +48,10 @@ class HomeFragment : Fragment(), ClickListener<Recipe> {
         // val homeViewModel =
         //     ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(), ::handleResult)
+        launcher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+            ::handleResult
+        )
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.recipeList.layoutManager = LinearLayoutManager(requireContext())
@@ -71,7 +72,7 @@ class HomeFragment : Fragment(), ClickListener<Recipe> {
     }
 
     private lateinit var launcher: ActivityResultLauncher<Intent>
-    fun handleResult(result: ActivityResult)  {
+    fun handleResult(result: ActivityResult) {
         when (result.resultCode) {
             CartOperation.ADD.ordinal -> {
                 val added = result.data!!.getSerializableExtra("added") as Recipe

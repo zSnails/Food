@@ -3,12 +3,15 @@ package com.zsnails.food
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zsnails.food.model.Order
 import com.zsnails.food.model.Recipe
 
 class CartViewModel : ViewModel() {
-    private val _cart = MutableLiveData<ArrayList<Recipe>>().apply {
+    private val _cart: MutableLiveData<ArrayList<Recipe>> = MutableLiveData<ArrayList<Recipe>>().apply {
         value = ArrayList();
+    }
+
+    fun clean() {
+        _cart.value!!.clear()
     }
 
     fun getSize(): Int {
@@ -26,7 +29,9 @@ class CartViewModel : ViewModel() {
         return _cart.value!!.contains(recipe)
     }
 
-    fun removeFromCart(recipe: Recipe) {
-        _cart.value!!.remove(recipe);
+    fun removeFromCart(recipe: Recipe): Int {
+        val idx = _cart.value!!.indexOf(recipe)
+        _cart.value!!.removeAt(idx)
+        return idx
     }
 }

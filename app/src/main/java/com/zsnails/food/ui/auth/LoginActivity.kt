@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.zsnails.food.BuildConfig
 import com.zsnails.food.MainActivity
+import com.zsnails.food.State
 import com.zsnails.food.databinding.ActivityLoginBinding
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.Auth
@@ -17,12 +18,16 @@ import io.github.jan.supabase.auth.user.UserInfo
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.exceptions.RestException
 import io.github.jan.supabase.postgrest.Postgrest
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var client: SupabaseClient
-    private var user: UserInfo? = null
+    private lateinit var state: State
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -32,11 +37,12 @@ class LoginActivity : AppCompatActivity() {
             install(Postgrest)
             install(Auth)
         }
-        user = client.auth.currentUserOrNull()
-        user.let {
-            // TODO: store the user in some global state, but I think I can just use the global user stored in supabase
-            goToMain()
-        }
+        state = State.getInstance()
+        // user = client.auth.currentUserOrNull()
+        // user?.let {
+        //     // TODO: store the user in some global state, but I think I can just use the global user stored in supabase
+        //     goToMain()
+        // }
     }
 
     private fun goToMain() {
@@ -51,11 +57,16 @@ class LoginActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                client.auth.signInWith(Email) {
-                    email = mail
-                    password = pass
-                }
+                async {
+                    client.auth.signInWith(Email) {
+                        email = mail
+                        password = pass
+                    }
+                }.await()
+
                 Log.d("AUTH:LOGIN", "Sucessfully signed in")
+                val me = client.auth.currentUserOrNull()
+                state.user = me!!
                 goToMain()
             } catch (a: RestException) {
                 Log.e("AUTH:ERR", String.format("could not sign in: %s", a.error))

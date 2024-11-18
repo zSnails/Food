@@ -13,4 +13,7 @@
     <string name="add_to_cart_text">Add to Cart</string>
     <string name="cart_price_label">Total Price:</string>
     <string name="total_price_placeholder">¢[PRICE]</string>
+    <string name="checkout_button_label">To Checkout</string>
+    <string name="order_history">My Orders</string>
+    <string name="order_id_label">Order ID</string>
 </resources>
